@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 char loggin[50],pn[50],sn[50],am[50],ap[50];
-int tipo_log,logueado=0;
+int tipo_log,tipoadmin=56,logueado=0;
 
 struct Materias{
 char curso[50];
@@ -41,7 +41,7 @@ int  tipo;
 void login();
 void generar_menu();
 void generar_archivos();
-void ingresar_usuarios();
+void ingresar_usuarios(int tip);
 int main(){
         int menu;
 	generar_archivos();
@@ -52,7 +52,7 @@ int main(){
         generar_menu();
         scanf("%i", &menu);
         switch(menu){
-        case 1: ingresar_usuarios();break;
+        case 1: ingresar_usuarios(tipo_log);break;
         case 20: return 0;break;
         }
         }
@@ -87,7 +87,7 @@ scanf( "%s", user.login);
 printf("Ingrese password:\n");
 scanf( "%s",user.password);
 if(strcmp(user.login,"Admin")==0 && strcmp(user.password,"fabian")==0 ){
-tipo_log=56;
+tipo_log=tipoadmin;
 logueado=1;
 strcpy(loggin,user.login);
 return;
@@ -110,7 +110,11 @@ fichero = fopen("Usuarios.dat","r");
 	}
 	 fclose( fichero );
 }
-void ingresar_usuarios(){
+void ingresar_usuarios(int tip){
+	if(tip!=tipoadmin){
+	printf("\n****NO tiene acceso esta funcion****\n");
+	return;
+	}
 	struct Usuarios user,aux;
 	FILE *p,*fichero;
 	int num=0,id=0;
