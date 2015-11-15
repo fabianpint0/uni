@@ -2,6 +2,10 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <iostream>
+#include <string>
+using namespace std;
+
 char loggin[50],pn[50],sn[50],am[50],ap[50];
 int id_user,tipo_log,tipoadmin=56,tipoalumno=1,tipoprofesor=2,logueado=0;
 
@@ -144,28 +148,47 @@ void ingresar_cursos(int tip){
 	return;
 	}
 struct Cursos curso,aux;
+char codigo[50],primero[10],segundo[10],paterno[10],materno[10];
 int id=0,existe=0;
 FILE *fichero,*p;
 printf("Ingrese codigo del curso: ");
-scanf( "%s", curso.codigo );
+scanf( "%s", codigo );
 fichero = fopen("Cursos.dat","r");
        while (!feof(fichero)){
 	     if (fread( &aux, sizeof(struct Cursos), 1, fichero )){
 			id=aux.id;
-		     	if(strcmp(curso.codigo,aux.codigo)==0){
+		     	if(strcmp(codigo,aux.codigo)==0){
+			printf("codigo archivo:%s",aux.codigo);
+			printf("codigo ingresado:%s",codigo);
 			existe=1;
 			}
 	     }
        }
        fclose( fichero );
-       printf("Existe:%d",existe);
        if(existe==0){
-       printf("Ingrese nombre del curso: \n");
-       scanf( "%s", curso.curso );
-       printf("Ingrese profesor asignado: \n");
-       scanf( "%s", curso.profesor );
-       p = fopen("Cursos.dat","a");
+	strcpy(curso.codigo,codigo);
        curso.id=id+1;
+       printf("Ingrese nombre del curso: \n");
+       scanf("%s",curso.curso);
+       printf("Ingrese profesor asignado\n");
+       printf("Ingrese primer nombre del profesor\n");
+      scanf("%s",primero);
+       printf("Ingrese segundo nombre del profesor\n");
+      scanf("%s",segundo);
+       printf("Ingrese primer apellido del profesor\n");
+      scanf("%s",paterno);
+       printf("Ingrese segundo apellido  del profesor\n");
+      scanf("%s",materno);
+      strcpy(curso.profesor,"");
+      strcat(curso.profesor,primero);
+      strcat(curso.profesor," ");
+      strcat(curso.profesor,segundo);
+      strcat(curso.profesor," ");
+      strcat(curso.profesor,paterno);
+      strcat(curso.profesor," ");
+      strcat(curso.profesor,materno);
+       printf("Ingrese este profesor:%s",curso.profesor);
+       p = fopen("Cursos.dat","a");
        fwrite(&curso, sizeof(struct Cursos), 1, p);
        fclose(p);
        p = fopen(curso.codigo,"a");
@@ -176,6 +199,7 @@ fichero = fopen("Cursos.dat","r");
        printf("El curso ya existe en el sistema");
        return;
        }
+return;
 }
 void ingresar_usuarios(int tip){
 	if(tip!=tipoadmin){
@@ -381,11 +405,11 @@ struct Cursos auxs;
 				strcpy(rgnombre,"");
 				strcpy(nombre,"");
 			        strcat(rgnombre,pn);
-				strcpy(rgnombre," ");
+				strcat(rgnombre," ");
 				strcat(rgnombre,sn);
-				strcpy(rgnombre," ");
+				strcat(rgnombre," ");
 				strcat(rgnombre,ap);
-				strcpy(rgnombre," ");
+				strcat(rgnombre," ");
 				strcat(rgnombre,am);
 printf("Ingresar codigo del curso:");
 scanf("%s",codigo);
