@@ -208,7 +208,7 @@ void ingresar_usuarios(int tip){
 	}
 	struct Usuarios user,aux;
 	FILE *p,*fichero;
-	int num=0,id=0i,tipos;
+	int num=0,id=0,tipos;
 	printf("Ingrese el nombre de usuario:> ");
 	scanf( "%s", user.login );
 	fichero = fopen("Usuarios.dat","r");
